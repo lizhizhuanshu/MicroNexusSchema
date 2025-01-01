@@ -1,0 +1,64 @@
+namespace MicroNexus;
+
+
+enum CodeType : byte {
+  kNone = 0,
+  kText,
+  kBinary,
+  kTextOrBinary
+}
+
+table Code {
+  type: CodeType;
+  data: [ubyte];
+}
+
+enum AnyValueType:byte {
+  kNone = 0,
+  kBoolean,
+  kInteger,
+  kDouble,
+  kBytes
+}
+
+
+table AnyValue {
+  type:AnyValueType;
+  z:bool;
+  i:long;
+  d:double;
+  b:[ubyte];
+}
+
+
+enum WorkerState:byte{
+  kOffline = 0,
+  kIdle,
+  kStarting,
+  kRunning,
+  kPaused,
+  kStopping,
+}
+
+enum LogLevel:byte {
+  kVerbase = 0,
+  kDebug,
+  kInfo,
+  kWarning,
+  kError,
+  kFatal
+}
+
+enum GetCodeMethod:byte {
+  kRequire = 0,
+  kLoad
+}
+
+
+table TaskInfo {
+  name:string;
+  version:uint;
+  description:string;
+  core_version:uint;
+  standard_library_version:uint;
+}

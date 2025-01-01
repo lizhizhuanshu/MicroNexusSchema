@@ -1,0 +1,127 @@
+include "./base_type.fbs";
+namespace MicroNexus;
+
+
+enum MessageType:byte {
+  kLogin = 0,
+  kLogout,
+
+  kStartDebug,
+  kStopDebug,
+  kInterrupt,
+  kPause,
+  kResume,
+  kWorkerLog,
+  kWorkerStateUpdate,
+  kWorkerExecuteResult,
+  kGetCode,
+  kGetConfigure,
+  kSetConfigure,
+  kCommonResponse
+
+}
+
+enum RoleType:byte{
+  kWorker = 1,
+  kDebugger,
+  kAdmin
+}
+
+enum LoginResult :byte{
+  kSuccess = 0,
+  kPasswordError,
+  kUserLogined,
+  kUserNotExists,
+  kOtherError
+}
+
+
+enum SimpleResult:byte{
+  kSuccess = 0,
+  
+  kWorkerNotExists,
+  kWorkerOffline,
+  kWorkerBusy,
+  kWorkerDebugging,
+
+}
+
+table LoginResponse {
+  result:LoginResult;
+}
+
+
+table StartDebug {
+  worker_id:uint;
+  worker_name:string;
+  code :Code;
+  core_version:uint;
+}
+
+table startDebugResponse {
+  worker_id:uint;
+  result:SimpleResult;
+}
+
+
+table WorkerExecuteResultNotify {
+  worker_id:uint;
+  success:bool;
+  error_message:string;
+  error_source:string;
+  error_line:uint;
+}
+
+
+struct Interrupt {
+  worker_id:uint;
+}
+
+struct Pause {
+  worker_id:uint;
+}
+
+struct Resume {
+  worker_id:uint;
+}
+
+
+table StartTask {
+  worker_id:uint;
+  task:TaskInfo;
+  boot_loader_code:Code;
+}
+
+table StartTaskResponse {
+  worker_id:uint;
+  result:SimpleResult;
+}
+
+
+table WorkerLog {
+  level:LogLevel;
+  source:string;
+  line:uint;
+  message:string;
+  worker_id:uint;
+}
+
+
+table GetCodeRequire {
+  call_id:uint ;
+  method:GetCodeMethod;
+  path:string;
+  worker_id:uint;
+}
+
+
+
+table WorkerStateUpdateNotify {
+  state:WorkerState;
+  worker_id:uint;
+}
+
+
+
+
+
