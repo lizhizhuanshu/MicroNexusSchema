@@ -40,6 +40,14 @@ enum WorkerState:byte{
   kStopping,
 }
 
+enum WorkerResult:byte{
+  kSuccess = 0,
+  kWorkerBusy,
+  kWorkerOffline,
+  kRuntimeError,
+  kNotBindTask
+}
+
 enum LogLevel:byte {
   kVerbase = 0,
   kDebug,
